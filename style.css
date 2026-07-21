@@ -1,0 +1,527 @@
+/* ==========================================================================
+   DESIGN SYSTEM & VARIABLES
+   ========================================================================== */
+:root {
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+
+    /* Theme Colors */
+    --color-bg-dark: #0a0a0c;
+    --color-text-light: #f5f5f7;
+    --color-text-muted: #a1a1a6;
+    --color-accent: #e5a93b; /* Rose Gold / Elegant Gold */
+    --color-accent-glow: rgba(229, 169, 59, 0.35);
+    
+    /* Glassmorphism Configuration */
+    --glass-bg: rgba(15, 15, 20, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-glow: 0 30px 60px rgba(0, 0, 0, 0.7);
+    --glass-inner-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   RESET & BASE STYLES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* ==========================================================================
+   BACKGROUNDS & OVERLAYS
+   ========================================================================== */
+.fullscreen-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.dark-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(10, 10, 12, 0.45) 0%, rgba(5, 5, 7, 0.9) 100%);
+    z-index: -1;
+}
+
+/* ==========================================================================
+   CINEMATIC FRAME (GLASSMORPHISM)
+   ========================================================================== */
+.cinematic-frame-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    z-index: 1;
+}
+
+.cinematic-frame {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    height: 520px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: var(--glass-glow), var(--glass-inner-shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* Cinematic Vignette Inner Frame Shadow */
+.frame-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Media Layer for Memories */
+.media-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+.scene-media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.scene-media.active {
+    opacity: 0.65; /* Elegant overlay effect */
+}
+
+/* Ken Burns Zoom Effect */
+.ken-burns {
+    animation: kenBurnsAnimation 6.5s ease-out forwards;
+}
+
+@keyframes kenBurnsAnimation {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+/* ==========================================================================
+   CONTENT OVERLAY & TEXTS
+   ========================================================================== */
+.content-overlay {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.text-group {
+    max-width: 650px;
+    margin-bottom: 30px;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.scene-title {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, #ffffff 0%, #d4b275 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.scene-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    white-space: pre-line;
+}
+
+/* Caption Reveal Styling */
+.caption-reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.caption-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   BUTTONS & ACTIONS
+   ========================================================================== */
+.actions-group {
+    display: flex;
+    gap: 20px;
+    z-index: 5;
+}
+
+.primary-btn {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.primary-btn:hover {
+    background: var(--color-accent);
+    color: #000;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 20px var(--color-accent-glow), 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.primary-btn:active {
+    transform: translateY(1px);
+}
+
+/* Skip Button Overlay */
+.skip-btn {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.3s ease, transform 0.3s ease;
+    opacity: 0.7;
+}
+
+.skip-btn:hover {
+    color: var(--color-text-light);
+    transform: translateX(3px);
+    opacity: 1;
+}
+
+/* ==========================================================================
+   LETTER SCENE SPECIFIC STYLES
+   ========================================================================== */
+.letter-container {
+    width: 100%;
+    max-width: 680px;
+    height: 280px;
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.letter-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 300;
+    padding-right: 15px;
+    white-space: pre-wrap;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Typewriter Caret */
+.typewriter-caret::after {
+    content: '|';
+    display: inline-block;
+    color: var(--color-accent);
+    animation: caretBlink 0.75s step-end infinite;
+    margin-left: 2px;
+}
+
+@keyframes caretBlink {
+    from, to { color: transparent }
+    50% { color: var(--color-accent) }
+}
+
+/* Elegant Scrollbar for Letter */
+.letter-scrollable::-webkit-scrollbar {
+    width: 4px;
+}
+
+.letter-scrollable::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+}
+
+.letter-scrollable::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.letter-scrollable::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+}
+
+/* ==========================================================================
+   QUESTION SCENE SPECIFIC STYLES
+   ========================================================================== */
+.question-actions-group {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+}
+
+#yes-btn {
+    position: absolute;
+    left: calc(50% - 130px); /* Positioned relative to frame center */
+    width: 110px;
+    z-index: 100;
+}
+
+#no-btn {
+    position: absolute;
+    left: calc(50% + 20px);
+    width: 110px;
+    transition: left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2), top 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+    z-index: 100;
+}
+
+/* ==========================================================================
+   ENDING SCENE & PROGRESS BAR
+   ========================================================================== */
+.ending-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+}
+
+.loading-label {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    max-width: 320px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent), #ffffff);
+    box-shadow: 0 0 10px var(--color-accent-glow);
+    transition: width 0.1s linear;
+}
+
+.ending-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.destination-title {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: #ffffff;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+}
+
+.personal-message {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-style: italic;
+    color: var(--color-accent);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+/* ==========================================================================
+   TRANSITION HELPER CLASSES
+   ========================================================================== */
+.hidden {
+    display: none !important;
+}
+
+.fade-in {
+    animation: fadeInAnimation 1s ease forwards;
+}
+
+.fade-out {
+    animation: fadeOutAnimation 1.2s ease forwards;
+}
+
+@keyframes fadeInAnimation {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOutAnimation {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.98); }
+}
+
+/* Fully black overlay for the final transition transition */
+.black-screen {
+    background: #000000 !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.black-screen .frame-vignette {
+    box-shadow: none !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (DESKTOP & MOBILE)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .cinematic-frame {
+        height: auto;
+        min-height: 480px;
+        aspect-ratio: auto;
+        padding: 30px 20px;
+        border-radius: 16px;
+    }
+
+    .scene-title {
+        font-size: 2.1rem;
+    }
+
+    .scene-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .letter-container {
+        height: 230px;
+    }
+
+    #yes-btn {
+        left: calc(50% - 115px);
+        width: 100px;
+    }
+
+    #no-btn {
+        left: calc(50% + 15px);
+        width: 100px;
+    }
+    
+    .destination-title {
+        font-size: 1.8rem;
+    }
+    
+    .personal-message {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+    .cinematic-frame {
+        height: 90vh;
+        min-height: auto;
+        padding: 15px 30px;
+    }
+    
+    .text-group {
+        margin-bottom: 10px;
+    }
+    
+    .scene-title {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+    }
+    
+    .letter-container {
+        height: 140px;
+        margin-bottom: 10px;
+    }
+}

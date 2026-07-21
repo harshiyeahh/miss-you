@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Ettayyii ❤️</title>
+    <!-- Google Fonts: Playfair Display for headings, Poppins for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Full-screen background wrapper with dark overlay -->
+    <div class="fullscreen-bg" id="fullscreen-bg"></div>
+    <div class="dark-overlay"></div>
+
+    <!-- Background music player -->
+    <audio id="bg-music" src="music/song.mp3" loop preload="auto"></audio>
+
+    <!-- Main Cinematic Glassmorphism Container -->
+    <main class="cinematic-frame-container" id="frame-container">
+        <div class="cinematic-frame" id="cinematic-frame">
+            <!-- Media Layer for Photos/Videos -->
+            <div class="media-layer" id="media-layer">
+                <img id="scene-image" class="scene-media hidden" src="" alt="Memory">
+                <video id="scene-video" class="scene-media hidden" playsinline></video>
+            </div>
+
+            <!-- Cinematic Vignette inside frame -->
+            <div class="frame-vignette"></div>
+
+            <!-- Content Overlay -->
+            <div class="content-overlay" id="content-overlay">
+                <!-- Text contents (Titles & Subtitles/Captions) -->
+                <div class="text-group" id="text-group">
+                    <h1 class="scene-title" id="scene-title">For Ettayyii ❤️</h1>
+                    <p class="scene-subtitle" id="scene-subtitle">
+                        I made something for you.<br>Take your time.
+                    </p>
+                </div>
+
+                <!-- Letter Scene Specific Area -->
+                <div class="letter-container hidden" id="letter-container">
+                    <div class="letter-scrollable" id="letter-text"></div>
+                </div>
+
+                <!-- Ending Scene Loading Area -->
+                <div class="ending-container hidden" id="ending-container">
+                    <div class="loading-label" id="loading-label">Loading next chapter...</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                    </div>
+                    <div class="ending-message hidden" id="ending-message">
+                        <div class="destination-title" id="destination-title"></div>
+                        <div class="personal-message" id="personal-message"></div>
+                    </div>
+                </div>
+
+                <!-- Primary Button Actions -->
+                <div class="actions-group" id="actions-group">
+                    <button class="primary-btn" id="begin-btn">Begin →</button>
+                    <button class="primary-btn hidden" id="continue-btn">Continue</button>
+                </div>
+
+                <!-- Question Scene Buttons -->
+                <div class="question-actions-group hidden" id="question-actions">
+                    <button class="primary-btn" id="yes-btn">YES ❤️</button>
+                    <button class="primary-btn" id="no-btn">NO</button>
+                </div>
+            </div>
+
+            <!-- Interactive HUD overlay (e.g. Skip button) -->
+            <button class="skip-btn hidden" id="skip-btn">Skip →</button>
+        </div>
+    </main>
+
+    <!-- Fallback/Preload Helper to cache images programmatically -->
+    <div class="preloader hidden" id="preloader"></div>
+</body>
+</html>
